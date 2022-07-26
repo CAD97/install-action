@@ -94,6 +94,9 @@ install_cargo_binstall() {
         esac
 
         download "${url}" "${cargo_bin}" "cargo-binstall${exe}"
+
+        info "cargo-binstall installed at $(type -P "cargo-binstall${exe}")"
+        x cargo binstall --help | head -1
     else
         info "cargo-binstall already installed on in ${cargo_bin}/cargo-binstall"
     fi
@@ -344,7 +347,10 @@ for tool in "${tools[@]}"; do
                 linux* | darwin*) chmod +x "${cargo_bin}/${tool}${exe}" ;;
             esac
             ;;
-        cargo-binstall) install_cargo_binstall ;;
+        cargo-binstall)
+            install_cargo_binstall
+            continue
+            ;;
         *)
             cargo_binstall "${tool}" "${version}"
             continue
